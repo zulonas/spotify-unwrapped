@@ -8,6 +8,7 @@ SRC_DIR = "src"
 BEARER_TOKEN = ""
 SPOTIFY_USER_ID = ""
 
+
 class Activity:
     def __init__(self, ts, username, platform, ms_played, conn_country,
                  ip_addr_decrypted, user_agent_decrypted, master_metadata_track_name,
@@ -118,7 +119,8 @@ def main():
 
     response = requests.request(
         "POST",
-        "https://api.spotify.com/v1/users/{}/playlists".format(SPOTIFY_USER_ID),
+        "https://api.spotify.com/v1/users/{}/playlists".format(
+            SPOTIFY_USER_ID),
         headers=headers,
         data=json.dumps({
             "name": "Spotify unwrapped",
@@ -136,12 +138,13 @@ def main():
         if i >= 100:
             break
         print(i + 1, k, v, song_dict[k].master_metadata_album_artist_name,
-            song_dict[k].master_metadata_track_name)
+              song_dict[k].master_metadata_track_name)
         url_new = "https://api.spotify.com/v1/playlists/{}/tracks?uris={}".format(
             playlist_uri, k)
         response = requests.request("POST", url_new, headers=headers, data={})
         print(response.text)
         i += 1
+
 
 if __name__ == "__main__":
     main()
